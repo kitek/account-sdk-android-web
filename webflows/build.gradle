@@ -158,7 +158,9 @@ static String base64Decode(String envVar) {
     return new String(value.decodeBase64())
 }
 
-signing {
-    useInMemoryPgpKeys(base64Decode('SIGNING_KEY'), base64Decode('SIGNING_PASSWORD'))
-    sign publishing.publications
+if (!System.getenv("JITPACK")) {
+    signing {
+        useInMemoryPgpKeys(base64Decode('SIGNING_KEY'), base64Decode('SIGNING_PASSWORD'))
+        sign publishing.publications
+    }
 }
